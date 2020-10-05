@@ -1,0 +1,6 @@
+<launch>
+
+ 	<node pkg="ORB_VIO" type="VIO_RGBD" name="VIO"  args="$(find ORB_VIO)/../../../Vocabulary/ORBvoc.txt $(find ORB_VIO)/../../../config/TUM1.yaml" cwd="node" output="screen" >
+	</node>
+
+</launch>

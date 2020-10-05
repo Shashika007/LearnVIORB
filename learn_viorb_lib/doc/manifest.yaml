@@ -1,0 +1,15 @@
+actions: []
+authors: Raul Mur-Artal
+brief: ''
+bugtracker: ''
+depends:
+- catkin
+- roscpp
+description: ORB SLAM2 functionality as a catkin lib package.
+license: GPLv3
+maintainers: Raul Mur-Artal <raulmur@unizar.es>
+msgs: []
+package_type: package
+repo_url: ''
+srvs: []
+url: ''

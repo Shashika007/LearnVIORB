@@ -1,0 +1,7 @@
+
+<launch>
+
+ 	<node pkg="learn_viorb_ros" type="VIO_Stereo" name="VIO"  args="$(find learn_viorb_lib)/../../../src/learn_viorb_lib/Vocabulary/orbvoc.dbow3 $(find learn_viorb_ros)/settings/EuRoC_Stereo.yaml true" cwd="node" output="screen" >
+	</node>
+
+</launch>

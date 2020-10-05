@@ -1,0 +1,158 @@
+%YAML:1.0
+
+# 1: realtime, 0: non-realtime
+test.RealTime: 1
+# Time for visual-inertial initialization
+test.VINSInitTime: 10.0
+
+# Modify test.InitVIOTmpPath and bagfile to the correct path
+# Path to save tmp files/results
+test.InitVIOTmpPath: "/home/te600016/opensourcecode/OpenSourceORBVIO/tmp/"
+
+## For good initialization (no movement at the beginning for some bag)
+test.DiscardTime: 0
+
+bagfile: "~/Downloads/V1_01_easy.bag"
+
+
+#######################################
+
+imutopic: "/imu/data"
+imagetopic0: "/camera/infra1/image_rect_raw"
+imagetopic1: "/camera/infra2/image_rect_raw"
+ 
+# Timestamp shift. Timage = Timu + image_delay
+Camera.delaytoimu: -9.29860761026e-05
+
+# acc=acc*9.8, if below is 1
+IMU.multiplyG: 0
+
+Camera.Tbc:
+ [   0.0110382,  -0.00558312,  0.99992349,  0.01613819,
+   -0.99991198, -0.00742331,  0.01099662,  0.00641987,
+  0.00736134, -0.99995686, -0.00566457, -0.00110792,
+  0.0, 0.0, 0.0, 1.0]
+
+# Local Window size
+LocalMapping.LocalWindowSize: 20
+
+#--------------------------------------------------------------------------------------------
+# Camera Parameters. Adjust them!
+#--------------------------------------------------------------------------------------------
+
+# Camera calibration and distortion parameters (OpenCV) 
+Camera.fx: 373.6504302988745
+Camera.fy: 375.75763034879947
+Camera.cx: 320.436342722086
+Camera.cy: 239.39529301144844
+
+Camera.k1: -0.004020373096063456
+Camera.k2: -0.005547787897453452
+Camera.p1: 0.0003561157710439325
+Camera.p2: 0.0003653801898754835
+
+Camera.width: 640
+Camera.height: 480
+
+# Camera frames per second 
+Camera.fps: 30.0
+
+# stereo baseline times fx
+Camera.bf: 18.577478805 #19.111530018 #19.152959328 #5.690341374 #19.186740112 #30.729138184
+
+# Color order of the images (0: BGR, 1: RGB. It is ignored if images are grayscale)
+Camera.RGB: 1
+
+# Close/Far threshold. Baseline times.
+ThDepth: 10
+
+DepthMapFactor: 1000.0
+
+#--------------------------------------------------------------------------------------------
+# Stereo Rectification. Only if you need to pre-rectify the images.
+# Camera.fx, .fy, etc must be the same as in LEFT.P
+#--------------------------------------------------------------------------------------------
+LEFT.height: 480
+LEFT.width: 640
+LEFT.D: !!opencv-matrix
+   rows: 1
+   cols: 5
+   dt: d
+   data: [-0.004020373096063456, -0.005547787897453452, 0.0003561157710439325, 0.0003653801898754835, 0.0]
+LEFT.K: !!opencv-matrix
+   rows: 3
+   cols: 3
+   dt: d
+   data: [373.6504302988745, 0.0, 320.4363427220866, 0.0, 375.75763034879947, 239.39529301144844, 0.0, 0.0, 1.0]
+LEFT.R:  !!opencv-matrix
+   rows: 3
+   cols: 3
+   dt: d
+   data: [1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0]
+LEFT.P:  !!opencv-matrix
+   rows: 3
+   cols: 4
+   dt: d
+   data: [373.6504302988745, 0.0, 320.4363427220866, 0.0, 0.0, 375.75763034879947, 239.39529301144844, 0.0, 0.0, 0.0, 1.0, 0.0]
+
+RIGHT.height: 480
+RIGHT.width: 640
+RIGHT.D: !!opencv-matrix
+   rows: 1
+   cols: 5
+   dt: d
+   data: [-0.0024021276332198294, -0.0078016361176795074, 0.0002687660056814919, 0.0004465628578118777, 0.0]
+RIGHT.K: !!opencv-matrix
+   rows: 3
+   cols: 3
+   dt: d
+   data: [373.40636529301906, 0.0, 321.520615553491, 0.0, 375.49353064695407, 239.36084632157363, 0.0, 0.0, 1.0]
+RIGHT.R:  !!opencv-matrix
+   rows: 3
+   cols: 3
+   dt: d
+   data: [1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0]
+RIGHT.P:  !!opencv-matrix
+   rows: 3
+   cols: 4
+   dt: d
+   data: [373.40636529301906, 0.0, 321.520615553491, 0.0, 0.0, 375.49353064695407, 239.36084632157363, 0.0, 0.0, 0.0, 1.0, 0.0]
+
+#--------------------------------------------------------------------------------------------
+# ORB Parameters
+#--------------------------------------------------------------------------------------------
+
+# ORB Extractor: Number of features per image
+ORBextractor.nFeatures: 1000
+
+# ORB Extractor: Scale factor between levels in the scale pyramid 
+ORBextractor.scaleFactor: 1.2
+
+# ORB Extractor: Number of levels in the scale pyramid 
+ORBextractor.nLevels: 8
+
+# ORB Extractor: Fast threshold
+# Image is divided in a grid. At each cell FAST are extracted imposing a minimum response.
+# Firstly we impose iniThFAST. If no corners are detected we impose a lower value minThFAST
+# You can lower these values if your images have low contrast   
+ORBextractor.iniThFAST: 20
+ORBextractor.minThFAST: 7
+
+#--------------------------------------------------------------------------------------------
+# Viewer Parameters
+#--------------------------------------------------------------------------------------------
+Viewer.KeyFrameSize: 0.05
+Viewer.KeyFrameLineWidth: 1
+Viewer.GraphLineWidth: 0.9
+Viewer.PointSize:2
+Viewer.CameraSize: 0.08
+Viewer.CameraLineWidth: 3
+Viewer.ViewpointX: 0
+Viewer.ViewpointY: -0.7
+Viewer.ViewpointZ: -1.8
+Viewer.ViewpointF: 500
+
+#--------------------------------------------------------------------------------------------
+# Map Parameters 
+#--------------------------------------------------------------------------------------------
+Map.mapfile: map.dbow3

@@ -1,0 +1,124 @@
+%YAML:1.0
+
+# 1: realtime, 0: non-realtime
+test.RealTime: 1
+# Time for visual-inertial initialization
+test.VINSInitTime: 10.0
+
+# Modify test.InitVIOTmpPath and bagfile to the correct path
+# Path to save tmp files/results
+test.InitVIOTmpPath: "/home/te600016/opensourcecode/OpenSourceORBVIO/tmp/"
+
+## For good initialization (no movement at the beginning for some bag)
+test.DiscardTime: 0
+bagfile: "~/Downloads/V1_01_easy.bag"
+
+#######################################
+
+imutopic: "/imu/data"
+#imagetopic: "/camera/color/image_raw"
+imagetopic: "/camera/infra1/image_rect_raw"
+depthtopic: "/camera/depth/image_rect_raw"
+
+# Timestamp shift. Timage = Timu + image_delay
+Camera.delaytoimu: -8.121e-05 #0.001 
+
+# acc=acc*9.8, if below is 1
+IMU.multiplyG: 0
+
+Camera.Tbc:
+# [   0.0110382,  -0.00558312,  0.99992349,  -0.014828838407993317,
+#   -0.99991198, -0.00742331,  0.01099662,  7.010150147834793e-05,
+#  0.00736134, -0.99995686, -0.00566457, -0.0005484368302859366,
+#  0.0, 0.0, 0.0, 1.0]
+
+ # [0.01779318, 0.99967549,-0.01822936, 0.07008565,
+ #  -0.9998017, 0.01795239, 0.00860714,-0.01771023,
+ #  0.00893160, 0.01807260, 0.99979678, 0.00399246,
+ #  0.0, 0.0, 0.0, 1.0]
+ [   0.0110382,  -0.00558312,  0.99992349,  0.01613819,
+   -0.99991198, -0.00742331,  0.01099662,  0.00641987,
+  0.00736134, -0.99995686, -0.00566457, -0.00110792,
+  0.0, 0.0, 0.0, 1.0]
+
+# Local Window size
+LocalMapping.LocalWindowSize: 20
+
+#--------------------------------------------------------------------------------------------
+# Camera Parameters. Adjust them!
+#--------------------------------------------------------------------------------------------
+
+# Camera calibration and distortion parameters (OpenCV) 
+
+#Camera.fx: 610.7021484375
+#Camera.fy: 610.4710083007812
+#Camera.cx: 318.2740478515625
+#Camera.cy: 240.72532653808594
+
+Camera.fx: 382.80267333984375
+Camera.fy: 382.80267333984375
+Camera.cx: 316.8811340332031
+Camera.cy: 237.82000732421875
+
+Camera.k1: 0 #0.117308
+Camera.k2: 0 #-0.240127
+Camera.p1: 0 #0.010626
+Camera.p2: 0 # 0.007712
+
+Camera.width: 640
+Camera.height: 480
+
+# Camera frames per second 
+Camera.fps: 20.0
+
+# IR projector baseline times fx (aprox.)
+Camera.bf: 9.204114448
+
+# Color order of the images (0: BGR, 1: RGB. It is ignored if images are grayscale)
+Camera.RGB: 1
+
+# Close/Far threshold. Baseline times.
+ThDepth: 10.0
+
+# Deptmap values factor 
+DepthMapFactor: 1000.0
+
+#--------------------------------------------------------------------------------------------
+# ORB Parameters
+#--------------------------------------------------------------------------------------------
+
+# ORB Extractor: Number of features per image
+ORBextractor.nFeatures: 1000
+
+# ORB Extractor: Scale factor between levels in the scale pyramid 	
+ORBextractor.scaleFactor: 1.2
+
+# ORB Extractor: Number of levels in the scale pyramid	
+ORBextractor.nLevels: 8
+
+# ORB Extractor: Fast threshold
+# Image is divided in a grid. At each cell FAST are extracted imposing a minimum response.
+# Firstly we impose iniThFAST. If no corners are detected we impose a lower value minThFAST
+# You can lower these values if your images have low contrast			
+ORBextractor.iniThFAST: 20
+ORBextractor.minThFAST: 7
+
+#--------------------------------------------------------------------------------------------
+# Viewer Parameters
+#--------------------------------------------------------------------------------------------
+Viewer.KeyFrameSize: 0.05
+Viewer.KeyFrameLineWidth: 1
+Viewer.GraphLineWidth: 0.9
+Viewer.PointSize:2
+Viewer.CameraSize: 0.08
+Viewer.CameraLineWidth: 3
+Viewer.ViewpointX: 0
+Viewer.ViewpointY: -0.7
+Viewer.ViewpointZ: -1.8
+Viewer.ViewpointF: 500
+
+#--------------------------------------------------------------------------------------------
+# Map Parameters 
+#--------------------------------------------------------------------------------------------
+#Map.mapfile: map.dbow3
+
